@@ -31,20 +31,28 @@ except ImportError:
     st.error("Missing langdetect. Install with: pip install langdetect")
     st.stop()
 
+# Optional: Try to import spacy, but don't require it
+USE_SPACY = False
 try:
     import spacy
+    try:
+        spacy.load("en_core_web_sm")
+        USE_SPACY = True
+    except:
+        st.info("SpaCy not available. Using basic sentence splitting.")
 except ImportError:
-    st.error("Missing spacy. Install with: pip install spacy")
-    st.stop()
+    st.info("SpaCy not installed. Using basic sentence splitting.")
 
 # Load models (cached to avoid reloading)
 @st.cache_resource
 def load_models():
-    try:
-        nlp = spacy.load("en_core_web_sm")
-    except OSError:
-        st.error("Spacy model not found. Please run: python -m spacy download en_core_web_sm")
-        st.stop()
+    nlp = None
+    if USE_SPACY:
+        try:
+            nlp = spacy.load("en_core_web_sm")
+            st.info("Using spaCy for advanced sentence segmentation")
+        except:
+            st.info("SpaCy model not found. Using basic sentence splitting.")
     
     device = "cuda" if torch.cuda.is_available() else "cpu"
     
