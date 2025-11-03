@@ -1,0 +1,11 @@
+streamlit
+torch
+torchvision
+torchaudio
+transformers
+diffusers
+moviepy
+pysrt
+spacy
+langdetect
+Pillow
