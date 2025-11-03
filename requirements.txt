@@ -1,11 +1,10 @@
 streamlit
 torch
-torchvision
-torchaudio
 transformers
 diffusers
+Pillow
 moviepy
 pysrt
-spacy
 langdetect
-Pillow
+spacy
+accelerate
